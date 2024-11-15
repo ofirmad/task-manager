@@ -1,6 +1,6 @@
 module github.com/ofirmad/task-manager
 
-go 1.22.8
+go 1.23
 
 require (
 	github.com/onsi/ginkgo/v2 v2.21.0

@@ -17,7 +17,9 @@ func main() {
 	handler := corsMiddleware(mux)
 
 	fmt.Println("Server is running on http://localhost:8080")
-	http.ListenAndServe(":8080", handler)
+	if err := http.ListenAndServe(":8080", handler); err != nil {
+		fmt.Printf("server failed to start: %v", err)
+	}
 }
 
 // corsMiddleware sets the CORS headers

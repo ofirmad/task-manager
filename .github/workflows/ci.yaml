@@ -1,0 +1,66 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Test, Build and Lint
+    runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: docker:19.03.12
+        options: --privileged
+        ports:
+          - 2375:2375
+        env:
+          DOCKER_TLS_CERTDIR: ""
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install Frontend Dependencies
+        working-directory: ./react-app
+        run: npm install
+
+      - name: Run Frontend Tests
+        working-directory: ./react-app
+        run: npm test
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.19
+
+      - name: Install Backend Dependencies
+        working-directory: .
+        run: go mod tidy
+
+      - name: Run Backend Tests
+        working-directory: .
+        run: go test ./...
+
+      - name: Build Docker Images
+        run: |
+          docker build -t task-manager-backend ./backend
+          docker build -t task-manager-frontend ./frontend
+
+      - name: Lint Frontend Code
+        working-directory: ./react-app
+        run: npm run lint
+
+      - name: Lint Backend Code
+        working-directory: .
+        run: golangci-lint run

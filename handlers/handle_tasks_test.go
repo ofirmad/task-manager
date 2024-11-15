@@ -48,7 +48,7 @@ var _ = Describe("Handle Tasks Tests", func() {
 			Expect(response.Code).To(Equal(http.StatusOK))
 
 			var responseBody []map[string]interface{}
-			json.Unmarshal(response.Body.Bytes(), &responseBody)
+			Expect(json.Unmarshal(response.Body.Bytes(), &responseBody)).To(Succeed())
 			Expect(responseBody).To(BeEmpty())
 			Expect(responseBody).To(HaveLen(0))
 		})
@@ -60,7 +60,7 @@ var _ = Describe("Handle Tasks Tests", func() {
 			Expect(response.Code).To(Equal(http.StatusOK))
 
 			var responseBody []map[string]interface{}
-			json.Unmarshal(response.Body.Bytes(), &responseBody)
+			Expect(json.Unmarshal(response.Body.Bytes(), &responseBody)).To(Succeed())
 			Expect(responseBody).To(HaveLen(1))
 			testutils.ValidateResponse(task, responseBody[0])
 		})
@@ -84,7 +84,7 @@ var _ = Describe("Handle Tasks Tests", func() {
 			Expect(response.Code).To(Equal(http.StatusOK))
 
 			var responseBody []map[string]interface{}
-			json.Unmarshal(response.Body.Bytes(), &responseBody)
+			Expect(json.Unmarshal(response.Body.Bytes(), &responseBody)).To(Succeed())
 			Expect(responseBody).To(HaveLen(2))
 			testutils.ValidateResponse(task1, responseBody[0])
 			testutils.ValidateResponse(task2, responseBody[1])
@@ -97,7 +97,7 @@ var _ = Describe("Handle Tasks Tests", func() {
 			Expect(response.Code).To(Equal(http.StatusCreated))
 
 			var responseBody map[string]interface{}
-			json.Unmarshal(response.Body.Bytes(), &responseBody)
+			Expect(json.Unmarshal(response.Body.Bytes(), &responseBody)).To(Succeed())
 
 			testutils.ValidateResponse(task, responseBody)
 		})
@@ -172,7 +172,7 @@ var _ = Describe("Handle Task By ID Tests", func() {
 			Expect(response.Code).To(Equal(http.StatusOK))
 
 			var responseBody map[string]interface{}
-			json.Unmarshal(response.Body.Bytes(), &responseBody)
+			Expect(json.Unmarshal(response.Body.Bytes(), &responseBody)).To(Succeed())
 			testutils.ValidateResponse(task, responseBody)
 		})
 
@@ -199,7 +199,7 @@ var _ = Describe("Handle Task By ID Tests", func() {
 			Expect(response.Code).To(Equal(http.StatusOK))
 
 			var responseBody map[string]interface{}
-			json.Unmarshal(response.Body.Bytes(), &responseBody)
+			Expect(json.Unmarshal(response.Body.Bytes(), &responseBody)).To(Succeed())
 
 			// validate id and created_at did not change
 			testutils.ValidateIDAndCreatedAt(newTask, responseBody)
@@ -224,7 +224,7 @@ var _ = Describe("Handle Task By ID Tests", func() {
 			Expect(response.Code).To(Equal(http.StatusOK))
 
 			var responseBody map[string]interface{}
-			json.Unmarshal(response.Body.Bytes(), &responseBody)
+			Expect(json.Unmarshal(response.Body.Bytes(), &responseBody)).To(Succeed())
 
 			testutils.ValidateResponse(newTask, responseBody)
 			testutils.ValidateIDAndCreatedAt(newTask, responseBody)
@@ -247,7 +247,7 @@ var _ = Describe("Handle Task By ID Tests", func() {
 			Expect(response.Code).To(Equal(http.StatusOK))
 
 			var responseBody map[string]interface{}
-			json.Unmarshal(response.Body.Bytes(), &responseBody)
+			Expect(json.Unmarshal(response.Body.Bytes(), &responseBody)).To(Succeed())
 
 			testutils.ValidateResponse(newTask, responseBody)
 			testutils.ValidateIDAndCreatedAt(newTask, responseBody)
@@ -270,7 +270,7 @@ var _ = Describe("Handle Task By ID Tests", func() {
 			Expect(response.Code).To(Equal(http.StatusOK))
 
 			var responseBody map[string]interface{}
-			json.Unmarshal(response.Body.Bytes(), &responseBody)
+			Expect(json.Unmarshal(response.Body.Bytes(), &responseBody)).To(Succeed())
 
 			testutils.ValidateResponse(newTask, responseBody)
 			testutils.ValidateIDAndCreatedAt(newTask, responseBody)
@@ -294,7 +294,7 @@ var _ = Describe("Handle Task By ID Tests", func() {
 			Expect(response.Code).To(Equal(http.StatusOK))
 
 			var responseBody map[string]interface{}
-			json.Unmarshal(response.Body.Bytes(), &responseBody)
+			Expect(json.Unmarshal(response.Body.Bytes(), &responseBody)).To(Succeed())
 
 			testutils.ValidateResponse(newTask, responseBody)
 			testutils.ValidateIDAndCreatedAt(newTask, responseBody)
@@ -315,7 +315,7 @@ var _ = Describe("Handle Task By ID Tests", func() {
 			Expect(response.Code).To(Equal(http.StatusNoContent))
 
 			var responseBody map[string]interface{}
-			json.Unmarshal(response.Body.Bytes(), &responseBody)
+			Expect(json.Unmarshal(response.Body.Bytes(), &responseBody)).NotTo(Succeed())
 			Expect(responseBody).To(BeEmpty())
 
 			// verify the task was deleted
